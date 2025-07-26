@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, Film } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { MovieList } from '../api/getMovies';
 import Card from './Card';
@@ -9,6 +10,8 @@ import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 
 const SearchResults = () => {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('q') || '';
   const isLoading = useSelector((state: { movie: { isLoading: boolean } }) => state.movie.isLoading);
   const movieList = useSelector((state: { movie: MovieList }) => state.movie.movieList);
   const navigate = useNavigate();
@@ -33,7 +36,9 @@ const SearchResults = () => {
           
           <div className="flex items-center gap-2">
             <Film className="w-6 h-6 text-purple-400" />
-            <h1 className="text-2xl font-bold text-white">Search Results</h1>
+            <h1 className="text-2xl font-bold text-white">
+              {query ? `Results for "${query}"` : 'Search Results'}
+            </h1>
           </div>
         </motion.div>
 
@@ -51,8 +56,10 @@ const SearchResults = () => {
             >
               <Film className="w-full h-full text-purple-400" />
             </motion.div>
-            <h3 className="text-xl font-semibold text-white mb-2">Searching Movies</h3>
-            <p className="text-slate-300 mb-4">Finding the best matches for you...</p>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              {query ? `Searching for "${query}"` : 'Searching Movies'}
+            </h3>
+            <p className="text-slate-300 mb-4">Finding the best matches...</p>
             <Progress value={75} className="h-2" />
           </div>
         </motion.div>
@@ -69,7 +76,9 @@ const SearchResults = () => {
               className="glass rounded-2xl p-12 text-center max-w-md mx-auto"
             >
               <Film className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">No Results Found</h3>
+              <h3 className="text-xl font-semibold text-white mb-2">
+                {query ? `No results found for "${query}"` : 'No Results Found'}
+              </h3>
               <p className="text-slate-300">Try searching with different keywords</p>
             </motion.div>
           ) : (
@@ -79,7 +88,8 @@ const SearchResults = () => {
                 animate={{ opacity: 1 }}
                 className="text-slate-300 text-center mb-8"
               >
-                Found {movieList.length} movie{movieList.length !== 1 ? 's' : ''}
+                Found {movieList.length} movie{movieList.length !== 1 ? 's' : ''} 
+                {query && ` for "${query}"`}
               </motion.p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -90,7 +100,7 @@ const SearchResults = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                   >
-                    <Link to={`/movie/${movie['#IMDB_ID']}`}>
+                    <Link to={`/movie/${movie['#IMDB_ID']}?from=${encodeURIComponent(query)}`}>
                       <Card 
                         title={movie['#TITLE']} 
                         image={movie['#IMG_POSTER']} 

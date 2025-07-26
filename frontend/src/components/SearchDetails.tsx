@@ -1,13 +1,14 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, Calendar, Clock, Globe, Star, Award, DollarSign, Users, Film } from 'lucide-react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { getMovieDetails } from '../api/getMovies';
 import type { MovieDetails } from '../api/getMovies';
 
 const SearchDetails = () => {
     const { id } = useParams<{ id: string|undefined }>();
+    const [searchParams] = useSearchParams();
+    const fromQuery = searchParams.get('from');
     const navigate = useNavigate();
     const [movieDetails, setMovieDetails] = React.useState<MovieDetails>();
     const [loading, setLoading] = React.useState(true);
@@ -30,6 +31,13 @@ const SearchDetails = () => {
         }
     }, [id]);
 
+    const handleBackClick = () => {
+      if (fromQuery) {
+        navigate(`/search?q=${encodeURIComponent(fromQuery)}`);
+      } else {
+        navigate(-1);
+      }
+    };
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {loading ? (
@@ -55,12 +63,12 @@ const SearchDetails = () => {
           <motion.button
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            onClick={() => navigate(-1)}
+            onClick={handleBackClick}
             className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 mb-8"
             whileHover={{ x: -5 }}
           >
             <ArrowLeft className="w-5 h-5" />
-            Back to Results
+            {fromQuery ? `Back to "${fromQuery}" results` : 'Back to Results'}
           </motion.button>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -232,7 +240,7 @@ const SearchDetails = () => {
             <h2 className="text-2xl font-bold text-white mb-2">Movie Not Found</h2>
             <p className="text-slate-300 mb-4">Sorry, we couldn't find the details for this movie.</p>
             <motion.button
-              onClick={() => navigate(-1)}
+              onClick={handleBackClick}
               className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl transition-colors duration-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

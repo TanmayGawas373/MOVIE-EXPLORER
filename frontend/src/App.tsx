@@ -44,7 +44,7 @@ function App() {
       ),
     },
     {
-      path:'/search',
+      path: '/search',
       element:(
         <>
           <Searchbar/>
