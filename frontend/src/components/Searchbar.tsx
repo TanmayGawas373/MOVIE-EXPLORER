@@ -6,6 +6,7 @@ import { getMoviesList2 } from '../api/getMovies';
 import type { MovieList } from '../api/getMovies';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMovieList,setLoading } from '../Slices/movieSlice';
+import { Link } from 'react-router-dom';
 
 const Searchbar = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -110,7 +111,7 @@ const Searchbar = () => {
       }, [queryFromUrl]);
     
     return (
-        <div className="w-full max-w-md mx-auto relative">
+        <div className="w-full max-w-md mx-auto relative mt-2">
           <motion.div
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
@@ -169,8 +170,8 @@ const Searchbar = () => {
               ) : suggestions.length > 0 ? (
                 <div className="max-h-80 overflow-y-auto">
                   {suggestions.map((suggestion, index) => (
+                    <Link key={suggestion['#IMDB_ID']} to={`/movie/${suggestion['#IMDB_ID']}`}>
                     <motion.div
-                      key={suggestion['#IMDB_ID']}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.05 }}
@@ -191,6 +192,7 @@ const Searchbar = () => {
                         </p>
                       </div>
                     </motion.div>
+                    </Link>
                   ))}
                 </div>
               ) : (

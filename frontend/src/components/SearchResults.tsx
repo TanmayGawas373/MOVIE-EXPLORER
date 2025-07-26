@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, Film } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
@@ -6,7 +5,6 @@ import { useSelector } from 'react-redux';
 import type { MovieList } from '../api/getMovies';
 import Card from './Card';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 
 const SearchResults = () => {
@@ -100,7 +98,7 @@ const SearchResults = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                   >
-                    <Link to={`/movie/${movie['#IMDB_ID']}?from=${encodeURIComponent(query)}`}>
+                    <Link to={`/movie/${movie['#IMDB_ID']}`}>
                       <Card 
                         title={movie['#TITLE']} 
                         image={movie['#IMG_POSTER']} 

@@ -34,12 +34,6 @@ function App() {
     {
       path: '/',
       element: (
-        // <button
-        //   className='p-100 border-amber-50'
-        //   onClick={handleGetMovies}
-        // >
-        //   hello
-        // </button>
         <Main_page />
       ),
     },
