@@ -14,7 +14,7 @@ export interface MovieState {
 }
 
 const initialState: MovieState = {
-  isLoading: true,
+  isLoading: false,
   movieList: []
 };
 
@@ -25,8 +25,9 @@ export const movieSlice = createSlice({
     setMovieList: (state, action: PayloadAction<Movie[]>) => {
       state.movieList = action.payload;
     },
-    decrement: (state) => {
+    setLoading: (state,action: PayloadAction<boolean>) => {
       // reserved for other use
+      state.isLoading = action.payload;
     },
     incrementByAmount: (state, action: PayloadAction<number>) => {
       // reserved for other use
@@ -34,6 +35,6 @@ export const movieSlice = createSlice({
   },
 });
 
-export const { setMovieList, decrement, incrementByAmount } = movieSlice.actions;
+export const { setMovieList,setLoading, incrementByAmount } = movieSlice.actions;
 
 export default movieSlice.reducer;

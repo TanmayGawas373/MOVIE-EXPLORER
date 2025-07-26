@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMovieList } from './Slices/movieSlice';
 import Searchbar from './components/Searchbar';
 import SearchResults from './components/SearchResults';
+import SearchDetails from './components/SearchDetails';
+import Main_page from './ui-pages/Main_page';
 
 function App() {
   const dispatch = useDispatch();
@@ -32,12 +34,13 @@ function App() {
     {
       path: '/',
       element: (
-        <button
-          className='p-100 border-amber-50'
-          onClick={handleGetMovies}
-        >
-          hello
-        </button>
+        // <button
+        //   className='p-100 border-amber-50'
+        //   onClick={handleGetMovies}
+        // >
+        //   hello
+        // </button>
+        <Main_page />
       ),
     },
     {
@@ -48,6 +51,10 @@ function App() {
           <SearchResults/>
         </>
       )
+    },
+    {
+      path: '/movie/:id',
+      element: <SearchDetails />
     }
   ]);
 
