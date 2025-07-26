@@ -29,12 +29,9 @@ export const movieSlice = createSlice({
       // reserved for other use
       state.isLoading = action.payload;
     },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      // reserved for other use
-    },
   },
 });
 
-export const { setMovieList,setLoading, incrementByAmount } = movieSlice.actions;
+export const { setMovieList,setLoading } = movieSlice.actions;
 
 export default movieSlice.reducer;
