@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import type { MovieList } from './api/getMovies';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMovieList } from './Slices/movieSlice';
 import Searchbar from './components/Searchbar';
 import SearchResults from './components/SearchResults';
 import SearchDetails from './components/SearchDetails';
