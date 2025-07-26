@@ -1,4 +1,3 @@
-import React from 'react'
 import { motion } from 'motion/react'
 import { Film, Search, Sparkles } from 'lucide-react'
 import Searchbar from '@/components/Searchbar'

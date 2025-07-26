@@ -102,7 +102,7 @@ const SearchResults = () => {
               </div>
             </>
           )}
-        </div>
+        </motion.div>
       )}
       </div>
     </div>
